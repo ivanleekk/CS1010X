@@ -4,24 +4,23 @@ import secrets
 MAX_MOVES = 4000
 
 # The various numbers of coins used for the contest.
-CONTEST_LEVELS = (10, 13, 15)
+CONTEST_LEVELS = (15,)
 
 # Score modifiers used for each level.
-SCORE_MODIFIERS = (1, 4, 7)
-
+# SCORE_MODIFIERS = (1, 4, 7)
+SCORE_MODIFIERS = (7,)
 # The number of rounds to run the solver for, per level.
 ROUNDS_PER_LEVEL = 1000
 
 
 class Table(object):
-
     def __init__(self, size):
         assert size > 1
         self.turn = 0
         self.display = False
         self.size = size
         self.randomize()
-        while self.is_solved(): # don't start with a solved state
+        while self.is_solved():  # don't start with a solved state
             self.randomize()
 
     def randomize(self):
@@ -55,7 +54,7 @@ def run_solver(coins, solver):
     table = Table(coins)
     while table.turn < MAX_MOVES:
         table.flip(solver(table.turn))
-        if (table.is_solved()):
+        if table.is_solved():
             return table.turn
         table.rotate()
     return -1
@@ -69,18 +68,17 @@ def get_contest_score(create_solver, verbose=False):
     for i in range(len(CONTEST_LEVELS)):
         size = CONTEST_LEVELS[i]
         if verbose:
-            print(f'=== Level {i+1}: {size} coins ===')
+            print(f"=== Level {i+1}: {size} coins ===")
 
         for r in range(ROUNDS_PER_LEVEL):
             moves = run_solver(size, create_solver(size))
-            score = int((MAX_MOVES - moves) * SCORE_MODIFIERS[i]) \
-                    if moves >= 0 else 0
+            score = int((MAX_MOVES - moves) * SCORE_MODIFIERS[i]) if moves >= 0 else 0
             if verbose:
-                print(f'  Round {r+1}: {moves} moves, {score} score')
+                print(f"  Round {r+1}: {moves} moves, {score} score")
             total_moves += moves if moves >= 0 else MAX_MOVES
             total_score += score
 
     if verbose:
-        print(f'=== Total moves: {total_moves} ===')
-        print(f'=== Total score: {total_score} ===')
+        print(f"=== Total moves: {total_moves} ===")
+        print(f"=== Total score: {total_score} ===")
     return total_score
