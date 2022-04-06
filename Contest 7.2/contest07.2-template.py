@@ -7,7 +7,7 @@ from email.mime import base
 from more_lazy_susan import *
 
 
-# def create_solver(coins):  # score: 12017038 for 10:3411368
+# def create_solver(coins):  # score: 12017038 for 10:3411368 score for 15: 3114587
 #     def solver(move_id):
 #         m_id = move_id % coins
 #         move = [False] * coins
@@ -17,7 +17,7 @@ from more_lazy_susan import *
 #     return solver
 
 
-# def create_solver(coins):  # score: 9379692
+# def create_solver(coins):  # score: 9379692 score for 15: 0
 #     def solver(move_id):
 #         if move_id % 3 == 0:
 #             move = [True, False, False] * coins
@@ -33,7 +33,7 @@ from more_lazy_susan import *
 #     return solver
 
 
-# def create_solver(coins):  # score: 12288990 for 10:3517211 score for 13:5452312
+# def create_solver(coins):  # score: 12288990 for 10:3517211 score for 13:5452312 score for 15: 3432345
 #     def solver(move_id):
 #         move = [False] * coins
 #         if move_id == 0:
@@ -47,7 +47,7 @@ from more_lazy_susan import *
 #     return solver
 
 
-# def create_solver(coins):  # score: 12869620 for 10:3461262 score for 13:5765296
+# def create_solver(coins):  # score: 12869620 for 10:3461262 score for 13:5765296 score for 15:3004050
 #     def solver(move_id):
 #         move = [True] * coins
 #         if move_id == 0:
@@ -58,10 +58,10 @@ from more_lazy_susan import *
 #                 move[x] = False
 #         return move
 
-#     return solver
+    # return solver
 
 
-# def create_solver(coins):  # score: for 10:2918259
+# def create_solver(coins):  # score: for 10:2918259 score for 15: 3223794
 #     def solver1(move_id):
 #         base1 = [True, False]
 #         base2 = [False, True]
@@ -88,7 +88,7 @@ from more_lazy_susan import *
 #         return solver2
 
 
-# def create_solver(coins):  # score: 12388129 score for 10: 3497953 score for 13:6006384
+# def create_solver(coins):  # score: 12388129 score for 10: 3497953 score for 13:6006384 score for 15: 3285324
 #     def solver(move_id):
 #         def flip(move, x):
 #             if move[x] == True:
@@ -112,7 +112,7 @@ from more_lazy_susan import *
 #     return solver
 
 
-# def create_solver(coins):  # score:12390799 #score for 13:5589476
+# def create_solver(coins):  # score:12390799 #score for 13:5589476 score for 15: 3035711
 #     def solver(move_id):
 #         def flip(move, x):
 #             if move[x] == True:
@@ -131,7 +131,7 @@ from more_lazy_susan import *
 #     return solver
 
 
-# def create_solver(coins):  # score:11675510
+# def create_solver(coins):  # score:11675510 score for 15: 2899974
 #     def solver(move_id):
 #         def flip(move, x):
 #             if move[x] == True:
@@ -149,7 +149,7 @@ from more_lazy_susan import *
 #     return solver
 
 
-# def create_solver(coins):  # score: 12105290 for 10:3501730 for 13:5855212
+# def create_solver(coins):  # score: 12105290 for 10:3501730 for 13:5855212 score for 15:2917432
 #     def solver(move_id):
 #         move = [False] * coins
 #         for x in range(1, coins):
@@ -160,7 +160,7 @@ from more_lazy_susan import *
 #     return solver
 
 
-# def create_solver(coins):  # score: 12610726 for 10:3481158 for 13:5918628
+# def create_solver(coins):  # score: 12610726 for 10:3481158 for 13:5918628 score for 15: 2875467
 #     def solver(move_id):
 #         move = []
 #         for x in range(coins):
@@ -169,25 +169,26 @@ from more_lazy_susan import *
 #     return solver
 
 
-def create_solver(coins):  # score: 12474559 for 10:3479936 score for 15:3169621
-    def solver(move_id):
-        def flip(move, x):
-            move[x] = secrets.choice([True, False])
+# def create_solver(coins):  # score: 12474559 for 10:3479936 score for 15:3169621
+#     def solver(move_id):
+#         def flip(move, x):
+#             move[x] = secrets.choice([True, False])
 
-        move = []
-        for x in range(coins - 1):
-            if move_id % 2 == 0:
-                if x / coins < 0.5:
-                    move.append(secrets.choice([True, False]))
-                else:
-                    move.append(False)
-            else:
-                if x / coins > 0.5:
-                    move.append(secrets.choice([True, False]))
-                else:
-                    move.append(False)
 
-    return solver
+#         move = []
+#         for x in range(coins - 1):
+#             if move_id % 2 == 0:
+#                 if x / coins < 0.5:
+#                     move.append(secrets.choice([True, False]))
+#                 else:
+#                     move.append(False)
+#             else:
+#                 if x / coins > 0.5:
+#                     move.append(secrets.choice([True, False]))
+#                 else:
+#                     move.append(False)
+
+#     return solver
 
 
 # def create_solver(coins):  # score: 10642286 score for 15:2924621
@@ -221,50 +222,53 @@ def create_solver(coins):  # score: 12474559 for 10:3479936 score for 15:3169621
 #     return solver
 
 
-# def create_solver(coins):
-#     def solver1(move_id):  # score: for 10: 3500217
-#         move = [False] * coins
-#         if move_id == 0:
-#             move[0] = True
-#             return move
-#         for x in range(1, coins - 1):
-#             if move_id % x == 0:
-#                 move[x] = True
-#         return move
+def create_solver(coins): #score 12459882 /12574997/11881798/12516302
+    def solver1(move_id):  # score: for 10: 3500217
+        move = [False] * coins
+        if move_id == 0:
+            move[0] = True
+            return move
+        for x in range(1, coins - 1):
+            if move_id % x == 0:
+                move[x] = True
+        return move
 
-#     def solver2(move_id):  # score for 13:5996052
-#         def flip(move, x):
-#             if move[x] == True:
-#                 move[x] = False
-#             else:
-#                 move[x] = True
-#             pass
+    def solver2(move_id):  # score for 13:5996052
+        def flip(move, x):
+            if move[x] == True:
+                move[x] = False
+            else:
+                move[x] = True
+            pass
 
-#         move = [True] * coins
-#         if move_id == 0:
-#             move[0] = False
-#             return move
-#         for x in range(1, coins - 1):
-#             if move_id % x == 0:
-#                 flip(move, x)
-#                 flip(move, x - 2)
-#             if move_id * coins % x == 0:
-#                 flip(move, x)
+        move = [True] * coins
+        if move_id == 0:
+            move[0] = False
+            return move
+        for x in range(1, coins - 1):
+            if move_id % x == 0:
+                flip(move, x)
+                flip(move, x - 2)
+            if move_id * coins % x == 0:
+                flip(move, x)
+        return move
 
-#     def solver3(move_id):
-#         def flip(move, x):
-#             move[x] = secrets.choice([True, False])
+    def solver3(move_id):# score for 15: 3090514
+        move = [False] * coins
+        if move_id == 0:
+            move[0] = True
+            return move
+        for x in range(1, coins - 1):
+            if move_id % x == 0:
+                move[x] = True
+        return move
 
-#         move = []
-#         for x in range(coins):
-#             move.append(secrets.choice([True, False]))
-
-#     if coins == 10:
-#         return solver1
-#     elif coins == 13:
-#         return solver2
-#     elif coins == 15:
-#         return solver3
+    if coins == 10:
+        return solver1
+    elif coins == 13:
+        return solver2
+    elif coins == 15:
+        return solver3
 
 
 # UNCOMMENT THE FOLLOWING LINE AND RUN TO GRADE YOUR SOLVER

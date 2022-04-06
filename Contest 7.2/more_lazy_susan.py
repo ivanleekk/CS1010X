@@ -4,11 +4,11 @@ import secrets
 MAX_MOVES = 4000
 
 # The various numbers of coins used for the contest.
-CONTEST_LEVELS = (15,)
+CONTEST_LEVELS = (10,13,15)
 
 # Score modifiers used for each level.
-# SCORE_MODIFIERS = (1, 4, 7)
-SCORE_MODIFIERS = (7,)
+SCORE_MODIFIERS = (1, 4, 7)
+
 # The number of rounds to run the solver for, per level.
 ROUNDS_PER_LEVEL = 1000
 
