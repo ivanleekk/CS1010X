@@ -6,7 +6,7 @@
 # Note that written answers are commented out to allow us to run your
 # code easily while grading your problem set.
 
-# Collaborator: <your collaborator's matric> <your collaborator's name>
+# Collaborator: <your collaborator's matric> Francis Chu
 
 ###############
 # Mission 11b #
@@ -21,12 +21,12 @@
 #   return mul(x, x)
 
 # (a) What are the types of the input and output of the generic square operation?
-# Answer:
+# Answer: they are both ordinary numbers
 
 # (b) Why would we prefer to define square in the above way, rather than:
 # def square(x):
 #    return apply_generic("square", x)
-# Answer:
+# Answer: by doing it this way, you have to define many special methods to things like square cube etc, whereas in the previous way you can build them using the primitives like add, sub, mul and div which give you the same result for less work
 
 ##########
 # Task 2 #
@@ -121,33 +121,41 @@ from generic_arith import *
 def install_complex_package():
     def make_com(x, y):
         return tag(repcom(x, y))
+
     def repcom(x, y):
         return (x, y)
+
     def real(x):
         return x[0]
+
     def imag(x):
         return x[1]
+
     def tag(x):
         return attach_tag("complex", x)
 
     # add, sub, mul, div: (RepCom, RepCom) -> Generic-Com
     def add_com(x, y):
-        return make_com( add(real(x), real(y)),
-                         add(imag(x), imag(y)) )
+        return make_com(add(real(x), real(y)), add(imag(x), imag(y)))
+
     def sub_com(x, y):
-        return make_com( sub(real(x), real(y)),
-                         sub(imag(x), imag(y)) )
+        return make_com(sub(real(x), real(y)), sub(imag(x), imag(y)))
+
     def mul_com(x, y):
-        return make_com( sub(mul(real(x), real(y)),
-                             mul(imag(x), imag(y))),
-                         add(mul(real(x), imag(y)),
-                             mul(real(y), imag(x))))
+        return make_com(
+            sub(mul(real(x), real(y)), mul(imag(x), imag(y))),
+            add(mul(real(x), imag(y)), mul(real(y), imag(x))),
+        )
+
     def div_com(x, y):
         com_conj = content(complex_conjugate(y))
         x_times_com_conj = content(mul_com(x, com_conj))
         y_times_com_conj = content(mul_com(y, com_conj))
-        return make_com( div(real(x_times_com_conj), real(y_times_com_conj)),
-                         div(imag(x_times_com_conj), real(y_times_com_conj)))
+        return make_com(
+            div(real(x_times_com_conj), real(y_times_com_conj)),
+            div(imag(x_times_com_conj), real(y_times_com_conj)),
+        )
+
     def complex_conjugate(x):
         return make_com(real(x), negate(imag(x)))
 
@@ -157,10 +165,13 @@ def install_complex_package():
     put("mul", ("complex", "complex"), mul_com)
     put("div", ("complex", "complex"), div_com)
 
+
 install_complex_package()
 
-def create_complex(x,y):
+
+def create_complex(x, y):
     return get("make", "complex")(x, y)
+
 
 # Change the values for the test variables below
 c_neg3_plus_10i = None
@@ -171,9 +182,12 @@ c1_plus_3i = None
 # Do not change #
 #################
 def gradeThis():
-    if is_equal(sub(c_neg3_plus_10i, mul(c1_plus_2i, c1_plus_3i)),
-        add(c1_plus_2i, c1_plus_3i)):
+    if is_equal(
+        sub(c_neg3_plus_10i, mul(c1_plus_2i, c1_plus_3i)), add(c1_plus_2i, c1_plus_3i)
+    ):
         print("Well done!")
     else:
         print("Please check your solution.")
+
+
 gradeThis()

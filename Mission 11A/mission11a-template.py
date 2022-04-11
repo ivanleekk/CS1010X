@@ -121,41 +121,51 @@ from generic_arith import *
 def install_rational_package():
     def make_rat(x, y):
         return tag(reprat(x, y))
+
     def reprat(x, y):
         return (x, y)
+
     def numer(x):
         return x[0]
+
     def denom(x):
         return x[1]
+
     def tag(x):
         return attach_tag("rational", x)
 
     # add, sub, mul, div: (RepRat, RepRat) -> Generic-Rat
     def add_rat(x, y):
-        return make_rat( add(mul(numer(x), denom(y)),
-                             mul(denom(x), numer(y))),
-                         mul(denom(x), denom(y)) )
+        return make_rat(
+            add(mul(numer(x), denom(y)), mul(denom(x), numer(y))),
+            mul(denom(x), denom(y)),
+        )
+
     def sub_rat(x, y):
-        return make_rat( sub(mul(numer(x), denom(y)),
-                             mul(denom(x), numer(y))),
-                         mul(denom(x), denom(y)) )
+        return make_rat(
+            sub(mul(numer(x), denom(y)), mul(denom(x), numer(y))),
+            mul(denom(x), denom(y)),
+        )
+
     def mul_rat(x, y):
-        return make_rat( mul(numer(x), numer(y)),
-                         mul(denom(x), denom(y)) )
+        return make_rat(mul(numer(x), numer(y)), mul(denom(x), denom(y)))
+
     def div_rat(x, y):
-        return make_rat( mul(numer(x), denom(y)),
-                         mul(denom(x), numer(y)) )
-    
+        return make_rat(mul(numer(x), denom(y)), mul(denom(x), numer(y)))
+
     put("make", "rational", make_rat)
     put("add", ("rational", "rational"), add_rat)
     put("sub", ("rational", "rational"), sub_rat)
     put("mul", ("rational", "rational"), mul_rat)
     put("div", ("rational", "rational"), div_rat)
 
+
 install_rational_package()
+
 
 def create_rational(x, y):
     return get("make", "rational")(x, y)
+
 
 # Change the values for the test variables below
 r1_2 = None
@@ -170,4 +180,6 @@ def gradeThis():
         print("Well done!")
     else:
         print("Please check your solution.")
+
+
 gradeThis()

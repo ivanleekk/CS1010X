@@ -254,7 +254,7 @@ def test_insert_animate():
     # => [Block size: 1, Block size: 2, Block size: 4, Block size: 6, Block size: 8, Block size: 3, Block size: 9]
 
 # Uncomment function call to test insert_animate()
-##test_insert_animate()
+test_insert_animate()
 
 ###########
 # Task 4b #
