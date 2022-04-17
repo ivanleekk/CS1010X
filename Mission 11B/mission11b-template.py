@@ -26,7 +26,7 @@
 # (b) Why would we prefer to define square in the above way, rather than:
 # def square(x):
 #    return apply_generic("square", x)
-# Answer: by doing it this way, you have to define many special methods to things like square cube etc, whereas in the previous way you can build them using the primitives like add, sub, mul and div which give you the same result for less work
+# Answer: by doing it this way, you have to define many special methods to things like square cube etc in the package, whereas in the previous way you can build them using the primitives like add, sub, mul and div which give you the same result for less work
 
 ##########
 # Task 2 #
@@ -158,13 +158,27 @@ def install_complex_package():
 
     def complex_conjugate(x):
         return make_com(real(x), negate(imag(x)))
-
+    # the 3 functions below are also by me
+    def negate_com(x): #(rep-com) -> generic-com
+        return make_com(negate(real(x)), negate(imag(x)))
+    
+    def is_zero_com(x): # (rep-com) -> Boolean
+        if real(x) == 0 and imag(x) == 0:
+            return True
+        else:
+            return False
+    def is_eq_com(x,y):# (rep-com,rep-com) -> Boolean
+        return x == y
+        
     put("make", "complex", make_com)
     put("add", ("complex", "complex"), add_com)
     put("sub", ("complex", "complex"), sub_com)
     put("mul", ("complex", "complex"), mul_com)
     put("div", ("complex", "complex"), div_com)
 
+    put("negate", ("complex",), negate_com)
+    put("is_zero", ("complex",), is_zero_com)
+    put("is_equal", ("complex", "complex"), is_eq_com)
 
 install_complex_package()
 
@@ -174,10 +188,11 @@ def create_complex(x, y):
 
 
 # Change the values for the test variables below
-c_neg3_plus_10i = None
-c1_plus_2i = None
-c1_plus_3i = None
-
+c_neg3_plus_10i = create_complex(create_ordinary(-3), create_ordinary(10))
+c1_plus_2i = create_complex(create_ordinary(1),create_ordinary(2))
+c1_plus_3i = create_complex(create_ordinary(1), create_ordinary(3))
+print(c_neg3_plus_10i)
+print(negate(c_neg3_plus_10i))
 #################
 # Do not change #
 #################
