@@ -124,24 +124,6 @@ def who_wins(m, players):
                 enqueue(q, player)
             count +=1
     return players
-    # while len(players) >=m:
-    #     count_of_loops = 0
-    #     q = make_queue()
-    #     print(players)
-    #     for x in range(m+1):
-    #         x += count_of_loops*m
-    #         while x >= len(players):
-    #             x = x-len(players)
-    #         enqueue(q, players[x])
-    #     print(q)
-    #     for x in range(m+1):
-    #         player = dequeue(q)
-    #         if x == m:
-    #             print(player)
-    #             players.remove(player)
-    #             break
-    #     count_of_loops+=1
-    # return players
     pass
 
 print(set(who_wins(3, ['val', 'hel', 'jam', 'jin', 'tze', 'eli', 'zha', 'lic'])))
