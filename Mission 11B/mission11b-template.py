@@ -126,10 +126,10 @@ def install_complex_package():
         return (x, y)
 
     def real(x):
-        return x[0]
+        return create_ordinary(x[0])
 
     def imag(x):
-        return x[1]
+        return create_ordinary(x[1])
 
     def tag(x):
         return attach_tag("complex", x)
