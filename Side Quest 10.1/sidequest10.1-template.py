@@ -263,16 +263,34 @@ def text_play():
 ##########
 # Task 4 #
 ##########
+def get_post_merge_matrix(post_merge):
+    return post_merge[0]
+
+
+def get_post_merge_valid(post_merge):
+    return post_merge[1]
+
+
+def get_post_merge_increment(post_merge):
+    return post_merge[2]
+
+
 def post_add(initial_state, post_merge):
-    result = make_state(
-        add_two(post_merge[0]), get_score(initial_state) + post_merge[2]
-    )
-    return (result, post_merge[1])
+    if get_post_merge_valid(post_merge):
+        result = make_state(
+            add_two(get_post_merge_matrix(post_merge)),
+            get_score(initial_state) + get_post_merge_increment(post_merge),
+        )
+    else:
+        result = make_state(
+            get_post_merge_matrix(post_merge),
+            get_score(initial_state) + get_post_merge_increment(post_merge),
+        )
+    return (result, get_post_merge_valid(post_merge))
 
 
 def make_state(matrix, total_score):
     return (matrix, total_score)
-    pass
 
 
 def get_matrix(state):
@@ -387,18 +405,53 @@ def pop_record(stack_of_records):
 #############
 
 # COPY AND UPDATE YOUR FUNCTIONS HERE
+def get_post_merge_matrix(post_merge):
+    return post_merge[0]
+
+
+def get_post_merge_valid(post_merge):
+    return post_merge[1]
+
+
+def get_post_merge_increment(post_merge):
+    return post_merge[2]
+
+
 def post_add(initial_state, post_merge):
-    result = make_state(
-        add_two(post_merge[0]),
-        get_score(initial_state) + post_merge[2],
-        get_records(initial_state),
-    )
-    if post_merge[1] == True:
-        push_record(
-            make_new_record(get_matrix(initial_state), post_merge[2]),
+    if get_post_merge_valid(post_merge):
+        result = make_state(
+            add_two(get_post_merge_matrix(post_merge)),
+            get_score(initial_state) + get_post_merge_increment(post_merge),
             get_records(initial_state),
         )
-    return (result, post_merge[1])
+    else:
+        result = make_state(
+            get_post_merge_matrix(post_merge),
+            get_score(initial_state) + get_post_merge_increment(post_merge),
+            get_records(initial_state),
+        )
+    if get_post_merge_valid(post_merge) == True:
+        push_record(
+            make_new_record(
+                get_matrix(initial_state), get_post_merge_increment(post_merge)
+            ),
+            get_records(initial_state),
+        )
+    return (result, get_post_merge_valid(post_merge))
+
+
+# def post_add(initial_state, post_merge):
+#     result = make_state(
+#         add_two(post_merge[0]),
+#         get_score(initial_state) + post_merge[2],
+#         get_records(initial_state),
+#     )
+#     if post_merge[1] == True:
+#         push_record(
+#             make_new_record(get_matrix(initial_state), post_merge[2]),
+#             get_records(initial_state),
+#         )
+#     return (result, post_merge[1])
 
 
 def make_state(matrix, total_score, records):
