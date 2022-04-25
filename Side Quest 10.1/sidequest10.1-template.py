@@ -263,15 +263,15 @@ def text_play():
 ##########
 # Task 4 #
 ##########
-def post_add(state):
-    if state[1] == True:
-        state[0] = add_two(state[0])
-        return (state, state[1])
-    else:
-        return state
+def post_add(initial_state, post_merge):
+    result = make_state(
+        add_two(post_merge[0]), get_score(initial_state) + post_merge[2]
+    )
+    return (result, post_merge[1])
 
 
 def make_state(matrix, total_score):
+    return (matrix, total_score)
     pass
 
 
@@ -280,36 +280,36 @@ def get_matrix(state):
 
 
 def get_score(state):
-    return state[2]
+    return state[1]
 
 
 def make_new_game(n):
     mat = add_two(add_two(new_game_matrix(n)))
-    return mat
+    return make_state(mat, 0)
 
 
 def left(state):
-    result = merge_left(state[0])
-    result = post_add(result)
-    return (result, result[1])
+    mid = merge_left(get_matrix(state))
+    result = post_add(state, mid)
+    return result
 
 
 def right(state):
-    result = merge_right(state[0])
-    result = post_add(result)
-    return (result, result[1])
+    mid = merge_right(get_matrix(state))
+    result = post_add(state, mid)
+    return result
 
 
 def up(state):
-    result = merge_up(state[0])
-    result = post_add(result)
-    return (result, result[1])
+    mid = merge_up(get_matrix(state))
+    result = post_add(state, mid)
+    return result
 
 
 def down(state):
-    result = merge_down(state[0])
-    result = post_add(result)
-    return (result, result[1])
+    mid = merge_down(get_matrix(state))
+    result = post_add(state, mid)
+    return result
 
 
 # Do not edit this #
@@ -326,7 +326,7 @@ game_logic = {
 }
 
 # UNCOMMENT THE FOLLOWING LINE TO START THE GAME (WITHOUT UNDO)
-gamegrid = GameGrid(game_logic)
+# gamegrid = GameGrid(game_logic)
 
 
 #################
@@ -339,15 +339,15 @@ gamegrid = GameGrid(game_logic)
 
 
 def make_new_record(mat, increment):
-    "Your answer here"
+    return (mat, increment)
 
 
 def get_record_matrix(record):
-    "Your answer here"
+    return record[0]
 
 
 def get_record_increment(record):
-    "Your answer here"
+    return record[1]
 
 
 ############
@@ -356,19 +356,30 @@ def get_record_increment(record):
 
 
 def make_new_records():
-    "Your answer here"
+    return []
 
 
 def push_record(new_record, stack_of_records):
-    "Your answer here"
+    stack_of_records.append(new_record)
+    if len(stack_of_records) > 3:
+        stack_of_records.pop(0)
+    return stack_of_records
 
 
 def is_empty(stack_of_records):
-    "Your answer here"
+    return not stack_of_records
 
 
 def pop_record(stack_of_records):
-    "Your answer here"
+    if is_empty(stack_of_records):
+        return None
+    else:
+        record = stack_of_records.pop()
+        return (
+            get_record_matrix(record),
+            get_record_increment(record),
+            stack_of_records,
+        )
 
 
 #############
@@ -376,58 +387,91 @@ def pop_record(stack_of_records):
 #############
 
 # COPY AND UPDATE YOUR FUNCTIONS HERE
+def post_add(initial_state, post_merge):
+    result = make_state(
+        add_two(post_merge[0]),
+        get_score(initial_state) + post_merge[2],
+        get_records(initial_state),
+    )
+    if post_merge[1] == True:
+        push_record(
+            make_new_record(get_matrix(initial_state), post_merge[2]),
+            get_records(initial_state),
+        )
+    return (result, post_merge[1])
+
+
 def make_state(matrix, total_score, records):
-    "Your answer here"
+    return (matrix, total_score, records)
+    pass
 
 
 def get_matrix(state):
-    "Your answer here"
+    return state[0]
 
 
 def get_score(state):
-    return state[2]
+    return state[1]
 
 
 def make_new_game(n):
     mat = add_two(add_two(new_game_matrix(n)))
-    return mat
+    records = make_new_records()
+    return make_state(mat, 0, records)
 
 
 def left(state):
-    "Your answer here"
+    mid = merge_left(get_matrix(state))
+    result = post_add(state, mid)
+    return result
 
 
 def right(state):
-    "Your answer here"
+    mid = merge_right(get_matrix(state))
+    result = post_add(state, mid)
+    return result
 
 
 def up(state):
-    "Your answer here"
+    mid = merge_up(get_matrix(state))
+    result = post_add(state, mid)
+    return result
 
 
 def down(state):
-    "Your answer here"
+    mid = merge_down(get_matrix(state))
+    result = post_add(state, mid)
+    return result
 
 
 # NEW FUNCTIONS TO DEFINE
 def get_records(state):
-    "Your answer here"
+    return state[2]
 
 
 def undo(state):
-    "Your answer here"
+    if not is_empty(get_records(state)):
+        record = pop_record(get_records(state))
+        result = make_state(
+            get_record_matrix(record),
+            get_score(state) - get_record_increment(record),
+            get_records(state),
+        )
+        return result, True
+    else:
+        return state, False
 
 
 # UNCOMMENT THE FOLLOWING LINES TO START THE GAME (WITH UNDO)
-##game_logic = {
-##    'make_new_game': make_new_game,
-##    'game_status': game_status,
-##    'get_score': get_score,
-##    'get_matrix': get_matrix,
-##    'up': up,
-##    'down': down,
-##    'left': left,
-##    'right': right,
-##    'undo': undo
-##}
-# gamegrid = GameGrid(game_logic)
+game_logic = {
+    "make_new_game": make_new_game,
+    "game_status": game_status,
+    "get_score": get_score,
+    "get_matrix": get_matrix,
+    "up": up,
+    "down": down,
+    "left": left,
+    "right": right,
+    "undo": undo,
+}
+gamegrid = GameGrid(game_logic)
