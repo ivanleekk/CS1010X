@@ -39,37 +39,37 @@ class LoanAcct extends BankAcct {
   protected double _limit;
 
   public LoanAcct(int aNum, double bal, double rate, double limit) {
-    _acctNum = aNum;
-    _balance = bal;
+    // Write your code here
+    super(aNum, bal);
     _rate = rate;
     _limit = limit;
   }
 
   // New method in subclass
   public void payInterest() {
-    double interest = _balance * _rate;
-    _balance += interest;
+    _balance = _balance + _balance * _rate;
   }
 
   // Method Overriding
   public boolean withdraw(double amount) {
-    if (_balance - amount < -_limit)
+    if (_balance - amount < -_limit) {
       return false;
-    _balance -= amount;
-    return true;
+    } else {
+      _balance = _balance - amount;
+      return true;
+    }
   }
 
   public void deposit(double amount) {
-    if (amount <= 0)
-      return;
-    _balance += amount;
+    _balance = _balance + amount;
   }
 
-  public boolean transfer(BankAcct fromAcct, BankAcct toAcct, double amount) {
-    if (fromAcct.withdraw(amount)) {
-      toAcct.deposit(amount);
-      return true;
-    }
-    return false;
-  }
+}
+
+public boolean transfer (BankAcct fromAcct, BankAcct toAcct, double amount) {
+	if (fromAcct.withdraw(amount)) {
+		toAcct.deposit(amount);
+		return true;
+	}
+	return false;
 }
