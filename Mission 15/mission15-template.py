@@ -22,9 +22,9 @@ class Ivan_AI(Tribute):
         # randomly every turn. You do NOT have to use this code if you don't
         # want to!
         things_around = self.objects_around()
-##        print("things",things_around)
+        ##        print("things",things_around)
         owned = self.get_inventory()
-##        print("owned",owned)
+        ##        print("owned",owned)
         possible_food = []
         possible_animals = []
         possible_weapons = []
@@ -45,22 +45,28 @@ class Ivan_AI(Tribute):
 
         # sort items to use
         ranged = list(filter(lambda x: type(x) == RangedWeapon, owned))
-        ranged.sort(key = lambda x: x.max_damage(), reverse = True)
+        ranged.sort(key=lambda x: x.max_damage(), reverse=True)
         ammos = list(filter(lambda x: type(x) == Ammo, owned))
         melee = list(filter(lambda x: type(x) == Weapon, owned))
-        melee.sort(key = lambda x: x.max_damage(), reverse = True)
-        all_loaded_weapons = list(filter(lambda x: x.shots_left() > 0 if type(x) == RangedWeapon else True ,filter(lambda x: isinstance(x, Weapon),owned)))
-        all_loaded_weapons.sort(key = lambda x: x.max_damage(), reverse = True)
+        melee.sort(key=lambda x: x.max_damage(), reverse=True)
+        all_loaded_weapons = list(
+            filter(
+                lambda x: x.shots_left() > 0 if type(x) == RangedWeapon else True,
+                filter(lambda x: isinstance(x, Weapon), owned),
+            )
+        )
+        all_loaded_weapons.sort(key=lambda x: x.max_damage(), reverse=True)
         to_eat = list(self.get_food())
-        to_eat.sort(key = lambda x: x.get_food_value(), reverse = True)
+        to_eat.sort(key=lambda x: x.get_food_value(), reverse=True)
         meds = list(self.get_medicine())
-        meds.sort(key = lambda x: x.get_medicine_value(), reverse = True)
-        
-        
+        meds.sort(key=lambda x: x.get_medicine_value(), reverse=True)
+
         # if i have a weapon and is see a tribute, attack them
         if len(all_loaded_weapons) > 0 and len(tributes) > 0:
-            tributes.sort(key = lambda x: x.get_health(), reverse = False) # sort tributes byv lowest health
-            return ("ATTACK", tributes[0],all_loaded_weapons[0])
+            tributes.sort(
+                key=lambda x: x.get_health(), reverse=False
+            )  # sort tributes byv lowest health
+            return ("ATTACK", tributes[0], all_loaded_weapons[0])
 
         # if less than 60% hunger and no one around eat food
         elif self.get_hunger() >= 40 and len(to_eat) > 0 and len(tributes) == 0:
@@ -69,9 +75,9 @@ class Ivan_AI(Tribute):
         # if damaged and no one around heal up
         elif self.get_health() < 100 and len(meds) > 0 and len(tributes) == 0:
             return ("EAT", meds[0])
-        
+
         # there is an empty ranged weapon, load it
-        if len(ranged) > 0: 
+        if len(ranged) > 0:
             for wea in ranged:
                 if wea.shots_left() == 0:
                     for ammo in ammos:
@@ -82,28 +88,34 @@ class Ivan_AI(Tribute):
         if len(possible_weapons) > 0:
             best = possible_weapons[0]
             for weapon in possible_weapons:
-                if weapon.max_damage() > best.max_damage() and (weapon.min_damage() - best.min_damage()) >= 0:
+                if (
+                    weapon.max_damage() > best.max_damage()
+                    and (weapon.min_damage() - best.min_damage()) >= 0
+                ):
                     best = weapon
             if type(best) == Weapon:
-                if len(melee)==0 or best.max_damage() > melee[0].max_damage():
-                    return("TAKE", best)
+                if len(melee) == 0 or best.max_damage() > melee[0].max_damage():
+                    return ("TAKE", best)
             elif type(best) == RangedWeapon:
-                if len(ranged)==0 or  best.max_damage() > ranged[0].max_damage():
-                    return("TAKE", best)
-        
+                if len(ranged) == 0 or best.max_damage() > ranged[0].max_damage():
+                    return ("TAKE", best)
+
         # if the unpicked ammo is for my weapon pick it up
         if len(possible_ammo) > 0:
             for ammo in possible_ammo:
-                if ammo.weapon_type() in map(lambda x: x.get_name(),filter(lambda x:type(x) == RangedWeapon,owned)):
-                    return("TAKE", ammo)
-                
+                if ammo.weapon_type() in map(
+                    lambda x: x.get_name(),
+                    filter(lambda x: type(x) == RangedWeapon, owned),
+                ):
+                    return ("TAKE", ammo)
+
         # if there is food pick it up
         if len(possible_food) > 0:
             ffood = possible_food[0]
             for food in possible_food:
                 if food.get_food_value() > ffood.get_food_value():
                     ffood = food
-            return("TAKE", ffood)
+            return ("TAKE", ffood)
 
         # if there are animals, kill them if i have a weapon
         if len(possible_animals) > 0 and len(all_loaded_weapons) > 0:
@@ -111,12 +123,11 @@ class Ivan_AI(Tribute):
             for animal in possible_animals:
                 if animal.get_food_value() > fanimal.get_food_value():
                     fanimal = animal
-            return("ATTACK", fanimal, all_loaded_weapons[0])
-                                                            
-        
+            return ("ATTACK", fanimal, all_loaded_weapons[0])
+
         exits = self.get_exits()
         if exits:
-            index = random.randint(0, len(exits)-1)
+            index = random.randint(0, len(exits) - 1)
             direction = exits[index]
             return ("GO", direction)
 
@@ -141,9 +152,8 @@ class Ivan_AI(Tribute):
 #     NameError: name 'your_AI' is not defined
 #
 # You have been warned!
-time_limit = 50 # Modify if your AI needs more than 50 moves for task 2
-your_AI = Ivan_AI # Modify if you changed the name of the AI class
-
+time_limit = 50  # Modify if your AI needs more than 50 moves for task 2
+your_AI = Ivan_AI  # Modify if you changed the name of the AI class
 
 
 ##################
@@ -172,9 +182,8 @@ your_AI = Ivan_AI # Modify if you changed the name of the AI class
 # Replace XX_AI with the class name of your AI
 # Replace gui=True with gui=False if you do not wish to see the GUI
 
-time_limit = 20    # You may change the time limit if your AI is taking too long
+time_limit = 20  # You may change the time limit if your AI is taking too long
 ##simulation.task2(Ivan_AI("Ivan AI", 100), time_limit, gui=True)
-
 
 
 #################
@@ -215,6 +224,7 @@ def config():
 
     return game
 
+
 # Replace XX_AI with the class name of your AI
 # Replace gui=True with gui=False if you do not wish to see the GUI
-simulation.optional_task(Ivan_AI("Ivan AI", 100), config, gui=False)
+simulation.optional_task(Ivan_AI("Ivan AI", 3000), config, gui=False)
