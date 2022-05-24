@@ -24,7 +24,7 @@ public class BusB1 extends AbstractBus {
         // TODO: Implement this (Task 2a)
         BusMap.Pair nextstop = BusMap.getNextStopAndTimeTaken("B1", currentStopName);
         this.currentStopName = nextstop.stopName;
-        if (nextstop.timeTakenFromPreviousStop = null) {
+        if (nextstop.timeTakenFromPreviousStop == null) {
             return -1;
         } else {
             return nextstop.timeTakenFromPreviousStop;

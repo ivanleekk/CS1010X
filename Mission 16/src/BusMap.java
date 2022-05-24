@@ -19,9 +19,9 @@ public class BusMap {
         // TODO: Implement this (Task 1b)
         switch (busname) {
             case "A1":
-                if (currentStop = null) {
+                if (currentStop == null) {
                     return new Pair(A1_STOPS[0], A1_TIMINGS[0]);
-                } else if (currentStop = A1_STOPS[A1_STOPS.length - 1]) {
+                } else if (currentStop == A1_STOPS[A1_STOPS.length - 1]) {
                     return null;
                 }
                 for (int i = 0; i < A1_STOPS.length; i++) {
@@ -30,9 +30,9 @@ public class BusMap {
                     }
                 }
             case "B1":
-                if (currentStop = null) {
+                if (currentStop == null) {
                     return new Pair(B1_STOPS[0], B1_TIMINGS[0]);
-                } else if (currentStop = B1_STOPS[B1_STOPS.length - 1]) {
+                } else if (currentStop == B1_STOPS[B1_STOPS.length - 1]) {
                     return null;
                 }
                 for (int i = 0; i < B1_STOPS.length; i++) {
@@ -41,9 +41,9 @@ public class BusMap {
                     }
                 }
             case "C":
-                if (currentStop = null) {
+                if (currentStop == null) {
                     return new Pair(C_STOPS[0], C_TIMINGS[0]);
-                } else if (currentStop = C_STOPS[C_STOPS.length - 1]) {
+                } else if (currentStop == C_STOPS[C_STOPS.length - 1]) {
                     return null;
                 }
                 for (int i = 0; i < C_STOPS.length; i++) {
@@ -52,9 +52,9 @@ public class BusMap {
                     }
                 }
             case "D1":
-                if (currentStop = null) {
+                if (currentStop == null) {
                     return new Pair(D1_STOPS[0], D1_TIMINGS[0]);
-                } else if (currentStop = D1_STOPS[D1_STOPS.length - 1]) {
+                } else if (currentStop == D1_STOPS[D1_STOPS.length - 1]) {
                     return null;
                 }
                 for (int i = 0; i < D1_STOPS.length; i++) {
